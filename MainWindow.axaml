@@ -1,0 +1,40 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:stm32LogicAnalyzer="clr-namespace:STM32LogicAnalyzer"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        xmlns:oxy="clr-namespace:OxyPlot.Avalonia;assembly=OxyPlot.Avalonia"
+        Width="1050" Height="700" WindowStartupLocation="CenterOwner"
+        x:Class="STM32LogicAnalyzer.MainWindow"
+        Title="STM32逻辑分析仪" Name="mainWindow"
+        >
+    <Grid RowDefinitions="Auto,Auto,*" Margin="0,10,0,0">
+        <Grid Grid.Row="0" ColumnDefinitions="Auto,Auto,Auto,Auto,Auto,*,Auto" Name="portSelector">
+            <TextBlock Grid.Column="0" Foreground="Black" Margin="10,0,0,0"
+                       FontSize="20">可用串口:</TextBlock>
+            <ComboBox Grid.Column="1" Name="portAvailable" Margin="10,0"
+                      ItemsSource="{Binding ElementName=mainWindow,Path=ports}"/>
+            <Button Grid.Column="2" Click="refreshSerial_OnClick" Margin="10,0">刷新列表</Button>
+            <TextBlock Grid.Column="5" Name="SerialStatus" Foreground="Orange" Margin="20,0,0,0"
+                        FontSize="20">串口未打开</TextBlock>
+            
+            <Button Grid.Column="6" Click="openSerial_OnClick" Margin="10,0">打开串口</Button>
+            
+        </Grid>
+        <Grid Grid.Row="1"  Name="dataConfig" ColumnDefinitions="Auto,Auto,*,Auto" Margin="0,10,0,0">
+            <TextBlock Grid.Column="0" Foreground="Black" Margin="10,0,0,0" FontSize="20">
+                采集点数(1~2500):
+            </TextBlock>
+            <TextBox Grid.Column="1" Name="pointsWillReceive" Width="100" Height="24">2500</TextBox>
+            <TextBlock Grid.Column="2" Name="receiveStatus" Foreground="Orange" Margin="20,0,0,0"
+                       FontSize="20">已接收：0</TextBlock>
+            <Button Grid.Column="3" Name="startSampingBtn" Margin="10,0" Click="StartSampingBtn_OnClick">开始采集</Button>
+        </Grid>
+        <Grid  Grid.Row="2"  Name="plotGrid" RowDefinitions="*,*,*"> 
+            <oxy:PlotView Grid.Row="0" Name="plotView0" />
+            <oxy:PlotView Grid.Row="1" Name="plotView1" />
+            <oxy:PlotView Grid.Row="2" Name="plotView2" />
+        </Grid>
+    </Grid>
+</Window>
